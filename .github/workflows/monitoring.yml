@@ -1,0 +1,26 @@
+#name: Disk Space Monitor
+on:
+  schedule:
+    # Run daily at midnight (adjust as needed)
+    - cron: "0 0 * * *"
+  workflow_dispatch: # Allows manual trigger
+  push:              # Trigger on code push (optional)
+    branches:
+      - main
+
+jobs:
+  run-disk-space-monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Grant execute permissions to the script
+      - name: Make Script Executable
+        run: chmod +x ./disk_space_monitor.sh
+
+      # Step 3: Run the Disk Space Monitoring Script
+      - name: Run Disk Space Monitoring Script
+        run: ./disk_space_monitor.sh
